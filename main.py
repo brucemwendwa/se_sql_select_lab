@@ -6,7 +6,22 @@ import os
 
 # STEP 1B
 # Connect to the database
-db_path = os.path.join(os.path.dirname(__file__), 'data.sqlite')
+# Try multiple possible paths for the database file
+possible_paths = [
+    'data.sqlite',
+    os.path.join(os.path.dirname(__file__), 'data.sqlite'),
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.sqlite'),
+]
+
+db_path = None
+for path in possible_paths:
+    if os.path.exists(path):
+        db_path = path
+        break
+
+if db_path is None:
+    db_path = 'data.sqlite'
+
 conn = sqlite3.connect(db_path)
 
 
@@ -59,5 +74,4 @@ df_day_month_year = pd.read_sql("""
     FROM orders
 """, conn)
 
-if __name__ == '__main__':
-    conn.close()
+conn.close()
