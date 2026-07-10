@@ -2,27 +2,10 @@
 # Import SQL Library and Pandas
 import sqlite3
 import pandas as pd
-import os
 
 # STEP 1B
 # Connect to the database
-# Try multiple possible paths for the database file
-possible_paths = [
-    'data.sqlite',
-    os.path.join(os.path.dirname(__file__), 'data.sqlite'),
-    os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.sqlite'),
-]
-
-db_path = None
-for path in possible_paths:
-    if os.path.exists(path):
-        db_path = path
-        break
-
-if db_path is None:
-    db_path = 'data.sqlite'
-
-conn = sqlite3.connect(db_path)
+conn = sqlite3.connect('data.sqlite')
 
 
 # STEP 2
@@ -61,7 +44,7 @@ df_short_title = pd.read_sql("""SELECT SUBSTR(jobTitle, 1, 2) AS short_title FRO
 sum_total_price = pd.read_sql("""
     SELECT ROUND(priceEach * quantityOrdered) AS total_price
     FROM orderDetails
-""", conn).sum().values
+""", conn).sum().astype(int).values
 
 # STEP 9
 # Replace None with your code
