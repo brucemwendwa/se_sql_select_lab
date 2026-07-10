@@ -2,10 +2,18 @@
 # Import SQL Library and Pandas
 import sqlite3
 import pandas as pd
+import sys
+import os
+
+# Handle path resolution for CodeGrade compatibility
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.insert(0, current_dir)
 
 # STEP 1B
 # Connect to the database
-conn = sqlite3.connect('data.sqlite')
+db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data.sqlite')
+conn = sqlite3.connect(db_path)
 
 
 # STEP 2
