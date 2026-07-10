@@ -64,3 +64,5 @@ df_day_month_year = pd.read_sql("""
         SUBSTR(orderDate, 1, 4) AS year
     FROM orders
 """, conn)
+
+conn.close()
