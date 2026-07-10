@@ -2,10 +2,12 @@
 # Import SQL Library and Pandas
 import sqlite3
 import pandas as pd
+import os
 
 # STEP 1B
 # Connect to the database
-conn = sqlite3.connect('data.sqlite')
+db_path = os.path.join(os.path.dirname(__file__), 'data.sqlite')
+conn = sqlite3.connect(db_path)
 
 
 # STEP 2
@@ -57,4 +59,5 @@ df_day_month_year = pd.read_sql("""
     FROM orders
 """, conn)
 
-conn.close()
+if __name__ == '__main__':
+    conn.close()
